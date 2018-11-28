@@ -588,21 +588,21 @@ function Neo4jD3(_selector, _options) {
             relationships: []
         };
 
-        data.results.forEach(function(result) {
-            result.data.forEach(function(data) {
-                data.graph.nodes.forEach(function(node) {
+        // data.results.forEach(function(result) {
+            data.forEach(function(data) {
+                data.nodes.forEach(function(node) {
                     if (!contains(graph.nodes, node.id)) {
                         graph.nodes.push(node);
                     }
                 });
 
-                data.graph.relationships.forEach(function(relationship) {
+                data.relationships.forEach(function(relationship) {
                     relationship.source = relationship.startNode;
                     relationship.target = relationship.endNode;
                     graph.relationships.push(relationship);
                 });
 
-                data.graph.relationships.sort(function(a, b) {
+                data.relationships.sort(function(a, b) {
                     if (a.source > b.source) {
                         return 1;
                     } else if (a.source < b.source) {
@@ -620,15 +620,15 @@ function Neo4jD3(_selector, _options) {
                     }
                 });
 
-                for (var i = 0; i < data.graph.relationships.length; i++) {
-                    if (i !== 0 && data.graph.relationships[i].source === data.graph.relationships[i-1].source && data.graph.relationships[i].target === data.graph.relationships[i-1].target) {
-                        data.graph.relationships[i].linknum = data.graph.relationships[i - 1].linknum + 1;
+                for (var i = 0; i < data.relationships.length; i++) {
+                    if (i !== 0 && data.relationships[i].source === data.relationships[i-1].source && data.relationships[i].target === data.relationships[i-1].target) {
+                        data.relationships[i].linknum = data.relationships[i - 1].linknum + 1;
                     } else {
-                        data.graph.relationships[i].linknum = 1;
+                        data.relationships[i].linknum = 1;
                     }
                 }
             });
-        });
+        // });
 
         return graph;
     }
